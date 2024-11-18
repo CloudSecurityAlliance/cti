@@ -1,0 +1,55 @@
+{
+  "type": "course-of-action",
+  "spec_version": "2.1",
+  "id": "course-of-action--9d4a3345-2b7c-4a2d-867a-b272a9be63e6",
+  "created": "2024-11-13T00:00:00.000Z",
+  "modified": "2024-11-13T00:00:00.000Z",
+  "name": "GuardDuty Malware Protection for S3",
+  "description": "Amazon GuardDuty Malware Protection for Amazon S3 provides malware detection for newly uploaded objects in Amazon S3 buckets. Using multiple AWS-developed and third-party scanning engines, it detects malware and alerts security teams, isolating threats before they can compromise the storage environment or spread through the organization. This service helps mitigate risks associated with public file uploads and malicious objects entering cloud storage, especially in environments where S3 is used for data exchange or application storage. This feature can mitigate behaviors outlined in MITRE ATT&CK Technique T1608.001: Stage Capabilities: Upload Malware.",
+  "x_mitre_version": "1.3",
+  "x_mitre_deprecated": false,
+  "x_mitre_domains": ["enterprise-attack"],
+  "x_mitre_platforms": ["AWS"],
+  "x_mitre_contributors": ["Amazon Web Services"],
+  "external_references": [
+    {
+      "source_name": "AWS GuardDuty Malware Protection",
+      "url": "https://docs.aws.amazon.com/guardduty/latest/ug/gdu-malware-protection-s3.html",
+      "description": "AWS documentation on GuardDuty Malware Protection for Amazon S3."
+    },
+    {
+      "source_name": "MITRE ATT&CK T1608.001",
+      "url": "https://attack.mitre.org/techniques/T1608/001/",
+      "description": "Official MITRE ATT&CK documentation for T1608.001: Stage Capabilities: Upload Malware."
+    }
+  ],
+  "x_mitre_implementation": {
+    "API_Method": {
+      "description": "Instructions for enabling GuardDuty Malware Protection for S3 via the AWS API.",
+      "steps": [
+        "Use the CreateMalwareProtectionPlan API operation to create a Malware Protection plan for your S3 buckets.",
+        "Set the 'protectedResource' parameter to specify the S3 bucket name and optional object prefixes.",
+        "Define 'actions' to specify post-scan actions, like tagging.",
+        "Set 'clientToken' for idempotency of the request.",
+        "Assign an IAM role in 'role' with permissions for GuardDuty scanning.",
+        "Optionally include 'tags' for the Malware Protection plan."
+      ]
+    },
+    "CLI_Example": {
+      "description": "AWS CLI command for enabling GuardDuty Malware Protection on S3.",
+      "command": "aws guardduty create-malware-protection-plan --actions '{\"tagging\": {\"status\": \"ENABLED\"}}' --client-token \"unique-client-token\" --protected-resource '{\"s3Bucket\": {\"bucketName\": \"your-s3-bucket-name\"}}' --role \"arn:aws:iam::account-id:role/role-name\" --tags '{\"Key1\": \"Value1\", \"Key2\": \"Value2\"}'"
+    },
+    "Console_Method": {
+      "description": "Instructions for enabling GuardDuty Malware Protection for S3 via the AWS Management Console.",
+      "steps": [
+        "Sign in to the AWS Management Console and navigate to the GuardDuty service.",
+        "In the GuardDuty dashboard, select 'Malware Protection for S3' and click 'Enable.'",
+        "Enter the name of the S3 bucket to protect or use the 'Browse S3' option to select an existing bucket.",
+        "Choose whether to scan all objects or only those with specific prefixes.",
+        "Optionally enable object tagging to add a predefined tag (`GuardDutyMalwareScanStatus`) to scanned objects.",
+        "Assign an IAM role with permissions for scanning and tagging. Create a new role or use an existing one with required permissions.",
+        "Click 'Enable' to activate Malware Protection for the selected S3 bucket."
+      ]
+    }
+  }
+}

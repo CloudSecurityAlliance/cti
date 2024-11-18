@@ -1,0 +1,72 @@
+{
+  "type": "bundle",
+  "id": "bundle--7b8e5a87-78c2-4d8b-946f-e547bde72d4f",
+  "objects": [
+    {
+      "type": "course-of-action",
+      "spec_version": "2.1",
+      "id": "course-of-action--2c8e58b3-fb19-4c56-a8c5-55d9a3d7f318",
+      "created": "2024-11-13T00:00:00.000Z",
+      "modified": "2024-11-13T00:00:00.000Z",
+      "name": "Microsoft Defender for Storage",
+      "description": "Microsoft Defender for Storage offers malware scanning for Azure Blob Storage, Azure Files, and Azure Data Lake Storage. It detects and prevents malicious content in near real-time, leveraging Microsoft Defender Antivirus technologies to protect cloud storage environments from malware and ransomware.",
+      "x_mitre_version": "1.0",
+      "x_mitre_deprecated": false,
+      "x_mitre_domains": ["enterprise-attack"],
+      "x_mitre_platforms": ["Azure"],
+      "x_mitre_contributors": ["Microsoft"],
+      "external_references": [
+        {
+          "source_name": "Microsoft Defender for Storage Documentation",
+          "url": "https://learn.microsoft.com/en-us/azure/defender-for-cloud/defender-for-storage-malware-scan",
+          "description": "Documentation on Microsoft Defender for Storage and its malware scanning capabilities."
+        }
+      ],
+      "x_mitre_implementation": {
+        "Console_Method": {
+          "description": "Instructions for enabling Microsoft Defender for Storage via the Azure Portal.",
+          "steps": [
+            "Sign in to the Azure Portal and navigate to 'Microsoft Defender for Cloud'.",
+            "Select 'Environment Settings' and choose your subscription.",
+            "Under 'Defender plans,' ensure 'Storage' is enabled.",
+            "To configure malware scanning, select the storage account to protect, enable malware scanning under 'Advanced Threat Protection,' and save the settings."
+          ]
+        },
+        "CLI_Method": {
+          "description": "Instructions for enabling Microsoft Defender for Storage using Azure CLI.",
+          "steps": [
+            "Open your command-line interface.",
+            "Use the following command to enable Microsoft Defender for Storage at the subscription level:",
+            "```bash",
+            "az security pricing create --name Storage --tier 'Standard'",
+            "```",
+            "To enable malware scanning for a specific storage account, execute:",
+            "```bash",
+            "az security setting update --name 'MCAS' --setting-kind 'DataExportSetting' --enabled true --storage-account <StorageAccountName>",
+            "```",
+            "Replace `<StorageAccountName>` with the name of your storage account."
+          ]
+        },
+        "API_Method": {
+          "description": "Instructions for enabling Microsoft Defender for Storage using REST API.",
+          "steps": [
+            "Construct a PUT request to the following endpoint:",
+            "```",
+            "https://management.azure.com/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/providers/Microsoft.Security/advancedThreatProtectionSettings/current?api-version=2021-01-15",
+            "```",
+            "Replace `{subscriptionId}`, `{resourceGroupName}`, and `{accountName}` with your Azure subscription ID, resource group name, and storage account name, respectively.",
+            "Set the request body to:",
+            "```json",
+            "{",
+            "  \"properties\": {",
+            "    \"isEnabled\": true",
+            "  }",
+            "}",
+            "```",
+            "Ensure you have the necessary authentication headers and permissions to make this request."
+          ]
+        }
+      }
+    }
+  ]
+}

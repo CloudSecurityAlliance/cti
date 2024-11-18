@@ -1,0 +1,27 @@
+{
+  "type": "attack-pattern",
+  "spec_version": "2.1",
+  "id": "attack-pattern--f9dbfbb7-60b7-4d2b-bc16-8128a4c69e98",
+  "created": "2024-11-13T00:00:00.000Z",
+  "modified": "2024-11-13T00:00:00.000Z",
+  "name": "Malware Injection via Public-Facing Cloud Services",
+  "description": "Adversaries may upload malware-infected files to public-facing cloud services that accept file uploads. This behavior aligns with MITRE ATT&CK Technique T1608.001: Stage Capabilities: Upload Malware, where adversaries stage malicious payloads on accessible platforms for later use.",
+  "x_mitre_version": "1.0",
+  "x_mitre_is_subtechnique": false,
+  "x_mitre_domains": ["enterprise-attack"],
+  "x_mitre_platforms": ["AWS", "GCP", "Azure", "SaaS"],
+  "x_mitre_detection": "Monitor cloud services for suspicious file uploads, especially those containing executable files or files with abnormal metadata (e.g., high entropy indicating possible encryption or obfuscation). Ensure logging is enabled on cloud storage and file processing events.",
+  "kill_chain_phases": [
+    {
+      "kill_chain_name": "mitre-attack",
+      "phase_name": "initial-access"
+    }
+  ],
+  "external_references": [
+    {
+      "source_name": "MITRE ATT&CK T1608.001",
+      "url": "https://attack.mitre.org/techniques/T1608/001/",
+      "description": "Official MITRE ATT&CK documentation for T1608.001: Stage Capabilities: Upload Malware."
+    }
+  ]
+}

@@ -1,0 +1,57 @@
+{
+  "type": "bundle",
+  "id": "bundle--2f1d5f2c-7e4a-4a7c-abc5-dff3b8e1fd7d",
+  "objects": [
+    {
+      "type": "course-of-action",
+      "spec_version": "2.1",
+      "id": "course-of-action--d3b9e8b9-b677-4fcc-8732-c9f3caa5e3b2",
+      "created": "2024-11-13T00:00:00.000Z",
+      "modified": "2024-11-13T00:00:00.000Z",
+      "name": "Custom Malware Scanning Solution for Google Cloud Storage",
+      "description": "Google Cloud Platform (GCP) does not natively support malware scanning for Cloud Storage. However, a custom solution can be implemented using ClamAV, Cloud Storage, Cloud Run, and Eventarc. This solution automates the scanning of files uploaded to Cloud Storage buckets, detects malware, and moves scanned files to appropriate buckets for clean or quarantined results.",
+      "x_mitre_version": "1.0",
+      "x_mitre_deprecated": false,
+      "x_mitre_domains": ["enterprise-attack"],
+      "x_mitre_platforms": ["GCP"],
+      "x_mitre_contributors": ["Google"],
+      "external_references": [
+        {
+          "source_name": "Google Cloud Custom Malware Scanning Guide",
+          "url": "https://cloud.google.com/architecture/automate-malware-scanning-for-documents-uploaded-to-cloud-storage",
+          "description": "Guide to implementing a custom malware scanning solution for Google Cloud Storage."
+        }
+      ],
+      "x_mitre_implementation": {
+        "Console_Method": {
+          "description": "Guide to implementing the solution using the Google Cloud Console.",
+          "steps": [
+            "Create three Cloud Storage buckets: `unscanned`, `clean`, and `quarantine`.",
+            "Deploy a Cloud Run service configured with ClamAV to handle file scanning.",
+            "Set up Eventarc to trigger the Cloud Run service whenever a file is uploaded to the `unscanned` bucket.",
+            "Ensure scanned files are moved to either the `clean` bucket (if no malware is detected) or the `quarantine` bucket (if malware is detected).",
+            "Keep the ClamAV virus definition database updated using a Cloud Scheduler job."
+          ]
+        },
+        "CLI_Method": {
+          "description": "Steps to deploy the malware scanning solution using Google Cloud CLI commands.",
+          "steps": [
+            "Create the necessary Cloud Storage buckets using `gcloud storage buckets create`.",
+            "Deploy the Cloud Run service with ClamAV using `gcloud run deploy`.",
+            "Set up Eventarc triggers for file uploads using `gcloud eventarc triggers create`.",
+            "Schedule ClamAV database updates using Cloud Scheduler with `gcloud scheduler jobs create`."
+          ]
+        },
+        "API_Method": {
+          "description": "Instructions for deploying the malware scanning solution using GCP APIs.",
+          "steps": [
+            "Use the Cloud Storage API to create the `unscanned`, `clean`, and `quarantine` buckets.",
+            "Deploy a containerized ClamAV service using the Cloud Run API.",
+            "Configure Eventarc triggers using the Eventarc API to respond to file uploads in the `unscanned` bucket.",
+            "Set up periodic ClamAV updates with the Cloud Scheduler API."
+          ]
+        }
+      }
+    }
+  ]
+}
