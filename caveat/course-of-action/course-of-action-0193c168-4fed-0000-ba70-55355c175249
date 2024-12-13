@@ -1,0 +1,47 @@
+{
+  "type": "course-of-action",
+  "spec_version": "2.1",
+  "id": "course-of-action--0193c168-4fed-0000-ba70-55355c175249",
+  "created": "2024-12-13T00:00:00.000Z",
+  "modified": "2024-12-13T00:00:00.000Z",
+  "name": "BadRAM Attack Mitigation Strategy",
+  "description": "AMD has released firmware updates to mitigate the BadRAM vulnerability (CVE-2024-21944) affecting SEV-SNP technology in EPYC processors. This vulnerability can be mitigated through a combination of physical security measures, hardware choices, and software updates.",
+  "x_mitre_version": "1.0",
+  "x_mitre_deprecated": false,
+  "x_mitre_domains": ["enterprise-attack"],
+  "x_mitre_platforms": ["AMD EPYC"],
+  "x_mitre_contributors": ["AMD"],
+  "external_references": [
+    {
+      "source_name": "AMD Security Bulletin",
+      "url": "https://www.amd.com/en/resources/product-security/bulletin/amd-sb-3015.html",
+      "external_id": "AMD-SB-3015"
+    }
+  ],
+  "x_mitre_implementation": {
+    "Hardware_Requirements": {
+      "description": "Use memory modules with locked Serial Presence Detect (SPD) capabilities.",
+      "steps": [
+        "Verify DIMM specifications to ensure SPD locking is supported",
+        "Replace any vulnerable memory modules, particularly certain Corsair DDR4 models known to be vulnerable"
+      ]
+    },
+    "Physical_Security": {
+      "description": "Implement physical security measures to prevent unauthorized access to server hardware.",
+      "steps": [
+        "Restrict physical access to server rooms and hardware",
+        "Implement monitoring systems for physical access",
+        "Maintain chain of custody documentation for hardware maintenance"
+      ]
+    },
+    "Software_Updates": {
+      "description": "Apply AMD's firmware updates that address the vulnerability.",
+      "steps": [
+        "Obtain the latest firmware updates from AMD",
+        "Schedule maintenance windows for firmware deployment",
+        "Verify firmware update installation",
+        "Test system functionality after updates"
+      ]
+    }
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "type": "attack-pattern",
+  "spec_version": "2.1",
+  "id": "attack-pattern--0193c168-4fec-0000-9549-cfc21de144e5",
+  "created": "2024-12-13T00:00:00.000Z",
+  "modified": "2024-12-13T00:00:00.000Z",
+  "name": "BadRAM Memory Aliasing Attack on Trusted Execution Environments",
+  "description": "Adversaries may modify the Serial Presence Detect (SPD) chip on DRAM modules to bypass security protections in AMD's Secure Encrypted Virtualization-Secure Nested Paging (SEV-SNP) technology. This technique involves either physical tampering using low-cost hardware ($10 Raspberry Pi) or software-based manipulation on certain vulnerable DIMM models to make memory modules report false capacity information. This causes address aliasing that allows unauthorized access to protected memory regions, enabling attackers to compromise the integrity of encrypted virtual machines and forge attestation reports.",
+  "x_mitre_version": "1.0",
+  "x_mitre_is_subtechnique": false,
+  "x_mitre_domains": ["enterprise-attack"],
+  "x_mitre_platforms": ["AMD EPYC"],
+  "x_mitre_detection": "Monitor for unauthorized physical access to server hardware. Implement logging for memory configuration changes during boot. Use memory modules with locked SPD capabilities. Monitor for unusual memory addressing patterns that might indicate aliasing attacks.",
+  "kill_chain_phases": [
+    {
+      "kill_chain_name": "mitre-attack",
+      "phase_name": "initial-access"
+    }
+  ],
+  "external_references": [
+    {
+      "source_name": "CVE",
+      "url": "https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2024-21944",
+      "external_id": "CVE-2024-21944"
+    },
+    {
+      "source_name": "AMD Security Bulletin",
+      "url": "https://www.amd.com/en/resources/product-security/bulletin/amd-sb-3015.html",
+      "external_id": "AMD-SB-3015"
+    },
+    {
+      "source_name": "BadRAM Research Paper",
+      "url": "https://badram.eu/badram.pdf",
+      "description": "BadRAM: Practical Memory Aliasing Attacks on Trusted Execution Environments"
+    }
+  ]
+}
