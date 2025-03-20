@@ -2,7 +2,7 @@
 
 ## CAVEaT
 
-Cloud Adversarial, Vectors, and Threats (CAVEaT) [Chatbot (v3) ](https://chatgpt.com/g/g-xXpnPwHaD-cloud-adversarial-vectors-and-threat-solutions-v3)
+Cloud Adversarial, Vectors, and Threats (CAVEaT) [Chatbot (v3) ](https://chatgpt.com/g/g-xXpnPwHaD-cloud-adversarial-vectors-and-threat-solutions-v3) (see the Chatbot directory for the Chatbot information) and the [WG Github repo](https://github.com/CloudSecurityAlliance-WG/WG-CAVEaT). 
 
 An example of creating an entry: https://chatgpt.com/share/67356abd-a78c-8013-91b1-473053aea9c2
 
