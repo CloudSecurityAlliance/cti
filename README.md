@@ -2,13 +2,9 @@
 
 ## CAVEaT
 
-Cloud Adversarial, Vectors, and Threats (CAVEaT)
+Cloud Adversarial, Vectors, and Threats (CAVEaT) [Chatbot (v3) ](https://chatgpt.com/g/g-xXpnPwHaD-cloud-adversarial-vectors-and-threat-solutions-v3)
 
-An example of creating entries: https://chatgpt.com/share/67356abd-a78c-8013-91b1-473053aea9c2
-
-## TODO
-
-Python tools to create and validate and make sure entries are linked, and generate the main file sets.
+An example of creating an entry: https://chatgpt.com/share/67356abd-a78c-8013-91b1-473053aea9c2
 
 ## Strategy
 
