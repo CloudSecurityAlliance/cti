@@ -47,6 +47,8 @@ These investments reveal the threats that security teams at major providers cons
 
 ## Sources We Monitor
 
+TODO: add support for the following:
+
 - Official cloud provider security announcements and blogs
 - API and IAM changes trackers:
   - [AWS API Changes](https://awsapichanges.com/)
@@ -66,6 +68,68 @@ We welcome contributions that enhance our cloud-specific threat intelligence. Pl
 - STIX-formatted data following our schema extensions
 
 If you are interested in contributing to this project, please [sign up with your email address](https://csaurl.org/WG-CAVEaT-Form)
+
+### Git Repository Setup for CTI Data Contributions
+
+To contribute to the CTI repository:
+
+1. **Fork the repository**:
+   - Visit https://github.com/CloudSecurityAlliance/cti/
+   - Click the "Fork" button in the upper right corner
+   - This creates your own copy of the repository under your GitHub account
+
+2. **Clone your fork locally**:
+   ```bash
+   git clone https://github.com/YOUR-USERNAME/cti.git
+   cd cti
+   ```
+
+3. **Add the upstream remote**:
+   ```bash
+   git remote add upstream https://github.com/CloudSecurityAlliance/cti.git
+   ```
+   This allows you to keep your fork synchronized with the main repository.
+
+4. **Create a branch for your work**:
+   ```bash
+   git checkout -b feature/your-feature-name
+   ```
+
+5. **Make changes, commit, and push to your fork**:
+   ```bash
+   git add .
+   git commit -m "Description of your changes"
+   git push origin feature/your-feature-name
+   ```
+
+6. **Create a Pull Request**:
+   - Visit your fork on GitHub
+   - Click "Pull Request"
+   - Select your branch and the main repository's main branch
+   - Provide a description of your changes
+   - Submit the pull request
+
+### Using WG-CAVEaT Tools
+
+The Cloud Security Alliance Working Group for CAVEaT provides a variety of tools to help with creating, validating, and managing STIX data for cloud threats:
+
+1. **Access the tools repository**:
+   - Visit https://github.com/CloudSecurityAlliance-WG/WG-CAVEaT
+   - This repository contains tools, templates, and utilities specifically designed for working with cloud threat intelligence
+
+2. **Set up local environment with Model Context Protocol**:
+   - Follow the setup instructions in the WG-CAVEaT repository to configure AI assistants for local file access
+   - This enables more efficient creation and validation of STIX objects
+
+3. **Use the provided templates**:
+   - The repository includes templates for common cloud attack patterns
+   - These templates help ensure consistency across contributions
+
+4. **Leverage the CAVEaT chatbot prompts**:
+   - The repository contains specialized prompts for working with AI assistants
+   - These prompts help guide the creation of well-structured STIX objects
+
+For detailed instructions on using these tools, refer to the [WG-CAVEaT repository](https://github.com/CloudSecurityAlliance-WG/WG-CAVEaT).
 
 ## License
 
