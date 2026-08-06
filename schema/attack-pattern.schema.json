@@ -1,0 +1,72 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/CloudSecurityAlliance/cti/schema/attack-pattern.schema.json",
+  "title": "CAVEaT attack-pattern",
+  "description": "A cloud attack technique. Required fields are those present on 100% of the existing corpus — this encodes the house style, not merely the STIX 2.1 minimum.",
+  "type": "object",
+  "required": [
+    "type", "spec_version", "id", "created", "modified",
+    "name", "description",
+    "x_mitre_domains", "x_mitre_platforms", "x_mitre_detection",
+    "kill_chain_phases", "external_references"
+  ],
+  "properties": {
+    "type": { "const": "attack-pattern" },
+    "spec_version": { "const": "2.1" },
+    "id": {
+      "type": "string",
+      "pattern": "^attack-pattern--[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$",
+      "description": "STIX id. UUID-shaped; not v4-strict, because parts of the existing corpus use a non-v4 version nibble."
+    },
+    "created":  { "$ref": "#/$defs/timestamp" },
+    "modified": { "$ref": "#/$defs/timestamp" },
+    "name":        { "type": "string", "minLength": 8 },
+    "description": { "type": "string", "minLength": 40 },
+    "x_mitre_version":         { "type": "string" },
+    "x_mitre_is_subtechnique": { "type": "boolean" },
+    "x_mitre_deprecated":      { "type": "boolean" },
+    "x_mitre_domains":   { "type": "array", "minItems": 1, "items": { "type": "string" } },
+    "x_mitre_platforms": {
+      "type": "array", "minItems": 1, "items": { "type": "string" },
+      "description": "What the technique targets, e.g. AWS / Azure / GCP, or specific hardware where the threat is cloud-relevant."
+    },
+    "x_mitre_detection":    { "type": "string", "minLength": 20 },
+    "x_mitre_contributors": { "type": "array", "items": { "type": "string" } },
+    "kill_chain_phases": {
+      "type": "array", "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["kill_chain_name", "phase_name"],
+        "properties": {
+          "kill_chain_name": { "type": "string" },
+          "phase_name":      { "type": "string" }
+        },
+        "additionalProperties": false
+      }
+    },
+    "external_references": { "$ref": "#/$defs/external_references" }
+  },
+  "additionalProperties": true,
+  "$defs": {
+    "timestamp": {
+      "type": "string",
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(\\.[0-9]+)?Z$"
+    },
+    "external_references": {
+      "type": "array",
+      "minItems": 1,
+      "description": "At least one citation. A claim with no source is the failure mode this corpus most needs to reject.",
+      "items": {
+        "type": "object",
+        "required": ["source_name"],
+        "properties": {
+          "source_name": { "type": "string" },
+          "url":         { "type": "string", "format": "uri", "pattern": "^https?://" },
+          "external_id": { "type": "string" },
+          "description": { "type": "string" }
+        },
+        "additionalProperties": false
+      }
+    }
+  }
+}
