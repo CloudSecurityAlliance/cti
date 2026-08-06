@@ -1,0 +1,66 @@
+name: validate
+
+# Structural gate for the CAVEaT corpus. See CONTRIBUTING.md.
+#
+# Pull requests validate CHANGED FILES ONLY, deliberately: some pre-existing
+# files predate the filename convention, and failing every PR on legacy drift
+# would train people to ignore the check. The weekly audit reports that drift
+# without blocking anyone.
+
+on:
+  pull_request:
+    paths:
+      - 'caveat/**'
+      - 'schema/**'
+      - 'scripts/validate_caveat.py'
+      - '.github/workflows/validate.yml'
+  push:
+    branches: [main]
+  schedule:
+    - cron: '0 6 * * 1'    # Monday 06:00 UTC — drift audit
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0          # need the base commit to diff against
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - run: pip install --quiet jsonschema
+
+      - name: Validate changed files
+        if: github.event_name == 'pull_request'
+        shell: bash
+        # BASE_REF goes through env, never interpolated into the script body:
+        # a ref name is attacker-influenced input and `${{ }}` splices it in
+        # before bash ever sees it. Filenames are passed as an argv array, so
+        # no word-splitting either.
+        env:
+          BASE_REF: ${{ github.base_ref }}
+        run: |
+          set -euo pipefail
+          git fetch --quiet origin -- "$BASE_REF"
+          # Portable read loop rather than `mapfile` — the latter needs bash 4+,
+          # which rules out testing this on macOS (bash 3.2) for no benefit.
+          CHANGED=()
+          while IFS= read -r f; do
+            [ -n "$f" ] && CHANGED+=("$f")
+          done < <(git diff --name-only --diff-filter=d "origin/${BASE_REF}...HEAD")
+          if [ ${#CHANGED[@]} -eq 0 ]; then
+            echo "No files changed."; exit 0
+          fi
+          printf 'Changed:\n'; printf '  %s\n' "${CHANGED[@]}"; echo
+          python3 scripts/validate_caveat.py --changed "${CHANGED[@]}"
+
+      - name: Audit whole corpus
+        if: github.event_name != 'pull_request'
+        run: python3 scripts/validate_caveat.py --all

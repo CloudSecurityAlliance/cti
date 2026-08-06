@@ -1,0 +1,81 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/CloudSecurityAlliance/cti/schema/course-of-action.schema.json",
+  "title": "CAVEaT course-of-action",
+  "description": "A mitigation. x_mitre_implementation is what distinguishes CAVEaT from generic CTI: provider-specific, actionable remediation rather than advice.",
+  "type": "object",
+  "required": [
+    "type", "spec_version", "id", "created", "modified",
+    "name", "description",
+    "x_mitre_domains", "x_mitre_platforms", "x_mitre_implementation",
+    "external_references"
+  ],
+  "properties": {
+    "type": { "const": "course-of-action" },
+    "spec_version": { "const": "2.1" },
+    "id": {
+      "type": "string",
+      "pattern": "^course-of-action--[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
+    },
+    "created":  { "$ref": "#/$defs/timestamp" },
+    "modified": { "$ref": "#/$defs/timestamp" },
+    "name":        { "type": "string", "minLength": 8 },
+    "description": { "type": "string", "minLength": 40 },
+    "x_mitre_version":      { "type": "string" },
+    "x_mitre_deprecated":   { "type": "boolean" },
+    "x_mitre_domains":      { "type": "array", "minItems": 1, "items": { "type": "string" } },
+    "x_mitre_platforms":    { "type": "array", "minItems": 1, "items": { "type": "string" } },
+    "x_mitre_contributors": { "type": "array", "items": { "type": "string" } },
+    "x_mitre_implementation": {
+      "type": "object",
+      "minProperties": 1,
+      "description": "Named implementation blocks. Existing corpus uses keys like Console_Method / CLI_Method / API_Method, and topic keys such as Software_Updates or Physical_Security.",
+      "additionalProperties": {
+        "type": "object",
+        "required": ["description"],
+        "anyOf": [
+          { "required": ["steps"] },
+          { "required": ["command"] }
+        ],
+        "description": "Each block needs a description plus either `steps` (the common form) or a single `command`. Both shapes occur in the existing corpus.",
+        "properties": {
+          "description": { "type": "string", "minLength": 10 },
+          "steps": {
+            "type": "array",
+            "minItems": 1,
+            "items": { "type": "string" },
+            "description": "Concrete steps. May embed fenced code blocks as plain strings."
+          },
+          "command": {
+            "type": "string",
+            "minLength": 3,
+            "description": "A single command, where a full step list would be overkill."
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "external_references": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["source_name"],
+        "properties": {
+          "source_name": { "type": "string" },
+          "url":         { "type": "string", "pattern": "^https?://" },
+          "external_id": { "type": "string" },
+          "description": { "type": "string" }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": true,
+  "$defs": {
+    "timestamp": {
+      "type": "string",
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(\\.[0-9]+)?Z$"
+    }
+  }
+}

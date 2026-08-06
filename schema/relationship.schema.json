@@ -1,0 +1,56 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/CloudSecurityAlliance/cti/schema/relationship.schema.json",
+  "title": "CAVEaT relationship",
+  "description": "An edge in the CAVEaT graph. Only one shape exists: a course-of-action mitigates an attack-pattern.",
+  "type": "object",
+  "required": [
+    "type", "spec_version", "id", "created", "modified",
+    "relationship_type", "source_ref", "target_ref", "description"
+  ],
+  "properties": {
+    "type": { "const": "relationship" },
+    "spec_version": { "const": "2.1" },
+    "id": {
+      "type": "string",
+      "pattern": "^relationship--[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
+    },
+    "created":  { "$ref": "#/$defs/timestamp" },
+    "modified": { "$ref": "#/$defs/timestamp" },
+    "relationship_type": {
+      "const": "mitigates",
+      "description": "The corpus models exactly one relationship type. Anything else needs a data-model discussion first."
+    },
+    "source_ref": {
+      "type": "string",
+      "pattern": "^course-of-action--[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
+    },
+    "target_ref": {
+      "type": "string",
+      "pattern": "^attack-pattern--[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
+    },
+    "description":     { "type": "string", "minLength": 20 },
+    "x_mitre_domains": { "type": "array", "items": { "type": "string" } },
+    "external_references": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["source_name"],
+        "properties": {
+          "source_name": { "type": "string" },
+          "url":         { "type": "string", "pattern": "^https?://" },
+          "external_id": { "type": "string" },
+          "description": { "type": "string" }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": true,
+  "$defs": {
+    "timestamp": {
+      "type": "string",
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(\\.[0-9]+)?Z$"
+    }
+  }
+}
